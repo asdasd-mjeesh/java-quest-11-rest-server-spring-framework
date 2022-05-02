@@ -2,12 +2,20 @@ package com.asdasd.mjeesh.dto.mapper;
 
 import com.asdasd.mjeesh.dto.ProductDto;
 import com.asdasd.mjeesh.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component("productMapper")
 public class ProductMapper implements Mapper<ProductDto, Product> {
+
+    private final ProducerMapper producerMapper;
+
+    @Autowired
+    public ProductMapper(ProducerMapper producerMapper) {
+        this.producerMapper = producerMapper;
+    }
 
     @Override
     public ProductDto map(Product fromObject) {
@@ -16,7 +24,7 @@ public class ProductMapper implements Mapper<ProductDto, Product> {
                 fromObject.getTitle(),
                 fromObject.getCost(),
                 fromObject.getShelfLife(),
-                fromObject.getProducer()
+                producerMapper.map(fromObject.getProducer())
         );
     }
 
@@ -28,7 +36,7 @@ public class ProductMapper implements Mapper<ProductDto, Product> {
                         product.getTitle(),
                         product.getCost(),
                         product.getShelfLife(),
-                        product.getProducer()))
+                        producerMapper.map(product.getProducer())))
                 .toList();
     }
 }
