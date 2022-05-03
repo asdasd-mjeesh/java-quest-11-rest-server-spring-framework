@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.asdasd.mjeesh'
@@ -9,6 +10,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
+    querydsl.extendsFrom implementation, runtimeOnly, compileOnly // for queryDsl (conflict-bug with lombok)
+
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -18,13 +21,35 @@ repositories {
     mavenCentral()
 }
 
+querydsl {
+    jpa = true
+    querydslSourcesDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+}
+
+compileQuerydsl { // for queryDsl
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += "$buildDir/generated/sources/annotationProcessor/java/main"
+        }
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
+
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'       // for queryDsl model generation :5.0.0
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'  // for download new classes from queryDsl
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
