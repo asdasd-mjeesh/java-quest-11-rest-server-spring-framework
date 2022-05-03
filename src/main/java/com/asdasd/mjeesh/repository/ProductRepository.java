@@ -1,12 +1,15 @@
 package com.asdasd.mjeesh.repository;
 
 import com.asdasd.mjeesh.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 
     Product save(Product product);                               // C-create
 
@@ -14,11 +17,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAll();                                     // R
 
-    List<Product> findAllByProducerId(Long producerId);          // R
+    Page<Product> findAllByProducerId(Long producerId, Pageable paging);          // R
 
-    List<Product> findAllByProducerName(String producerName);    // R
+    Page<Product> findAllByProducerName(String producerName, Pageable paging);    // R
 
-//    void update(Product product);                                // U-update
+//    void update(Product product);                              // U-update
 
     void deleteById(Long id);                                    // D-delete
 }

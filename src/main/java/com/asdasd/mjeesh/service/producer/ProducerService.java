@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ProducerService {
 
-    List<Producer> findAll();
+    List<Producer> findAll(Integer pageNo);
 
 }

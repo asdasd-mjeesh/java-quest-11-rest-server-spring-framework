@@ -8,6 +8,7 @@ import com.asdasd.mjeesh.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -27,19 +28,32 @@ public class ProductController {
         return productMapper.map(productService.save(product));
     }
 
-    @GetMapping("/")
-    public List<ProductDto> findAllProducts() {
-        return productMapper.map(productService.findAll());
+    @GetMapping("/{pageNo}")
+    public List<ProductDto> findAllProducts(@PathVariable Integer pageNo) {
+        return productMapper.map(productService.findAll(pageNo));
     }
 
-    @GetMapping("/producer-id/{id}")
-    public List<ProductDto> findAllProductsByProducerId(@PathVariable Long id) {
-        return productMapper.map(productService.findAllByProducerId(id));
+    @GetMapping("/producer-id/{id}/{pageNo}")
+    public List<ProductDto> findAllProductsByProducerId(@PathVariable Long id,
+                                                        @PathVariable Integer pageNo) {
+        return productMapper.map(productService.findAllByProducerId(id, pageNo));
     }
 
-    @GetMapping("/producer-name/{producerName}")
-    public List<ProductDto> findAllProductsByProducerName(@PathVariable String producerName) {
-        return productMapper.map(productService.findAllByProducerName(producerName));
+    @GetMapping("/producer-name/{producerName}/{pageNo}")
+    public List<ProductDto> findAllProductsByProducerName(@PathVariable String producerName,
+                                                          @PathVariable Integer pageNo) {
+        return productMapper.map(productService.findAllByProducerName(producerName, pageNo));
+    }
+
+    @GetMapping("/filter/{title}/{producerName}/{minCost}/{maxCost}/{pageNo}")
+    public List<ProductDto> findAllProductsByFilter(@PathVariable String title,
+                                                    @PathVariable String producerName,
+                                                    @PathVariable BigDecimal minCost,
+                                                    @PathVariable BigDecimal maxCost,
+                                                    @PathVariable Integer pageNo) {
+
+        System.out.println("title = " + title);
+        return productMapper.map(productService.findByFilter(title, producerName, minCost, maxCost, pageNo));
     }
 
     @PutMapping("/")
