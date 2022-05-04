@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class ProducerServiceImpl implements ProducerService {
     private final ProducerRepository producerRepository;
-    private Pageable paging;
 
     final int DEFAULT_PAGE_SIZE = 10;
     final String DEFAULT_SORT_VALUE = "name";
@@ -22,6 +21,11 @@ public class ProducerServiceImpl implements ProducerService {
     @Autowired
     public ProducerServiceImpl(ProducerRepository producerRepository) {
         this.producerRepository = producerRepository;
+    }
+
+    @Override
+    public Producer save(Producer producer) {
+        return producerRepository.save(producer);
     }
 
     @Override
@@ -33,5 +37,16 @@ public class ProducerServiceImpl implements ProducerService {
             return executePage.getContent();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public Producer findById(Long id) {
+        return producerRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        producerRepository.deleteById(id);
+        return producerRepository.findById(id).isEmpty();
     }
 }

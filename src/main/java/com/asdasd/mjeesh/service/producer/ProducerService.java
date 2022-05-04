@@ -6,6 +6,12 @@ import java.util.List;
 
 public interface ProducerService {
 
+    Producer save(Producer producer);
+
+    Producer findById(Long id);
+
     List<Producer> findAll(Integer pageNo);
 
+    boolean delete(Long id);
 }
+

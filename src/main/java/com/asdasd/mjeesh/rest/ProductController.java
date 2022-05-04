@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/products")
@@ -31,6 +32,16 @@ public class ProductController {
     @GetMapping("/{pageNo}")
     public List<ProductDto> findAllProducts(@PathVariable Integer pageNo) {
         return productMapper.map(productService.findAll(pageNo));
+    }
+
+    @GetMapping("/id/{id}")
+    public ProductDto findProductById(@PathVariable Long id) {
+        var executeResult = productService.findById(id);
+        if (Objects.isNull(executeResult)) {
+            throw new NoSuchProductException("No such product with id = " + id);
+        }
+
+        return productMapper.map(executeResult);
     }
 
     @GetMapping("/producer-id/{id}/{pageNo}")

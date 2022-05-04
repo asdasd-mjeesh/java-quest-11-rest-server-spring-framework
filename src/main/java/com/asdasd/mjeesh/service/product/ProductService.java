@@ -9,6 +9,8 @@ public interface ProductService {
 
     Product save(Product product);
 
+    Product findById(Long id);
+
     List<Product> findAll(Integer pageNo);
 
     List<Product> findAllByProducerId(Long id, Integer pageNo);

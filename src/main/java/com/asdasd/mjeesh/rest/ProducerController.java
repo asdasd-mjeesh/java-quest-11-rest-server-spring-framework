@@ -2,12 +2,12 @@ package com.asdasd.mjeesh.rest;
 
 import com.asdasd.mjeesh.dto.ProducerDto;
 import com.asdasd.mjeesh.dto.mapper.ProducerMapper;
+import com.asdasd.mjeesh.exception_heandling.producer.NoSuchProducerException;
+import com.asdasd.mjeesh.exception_heandling.product.NoSuchProductException;
+import com.asdasd.mjeesh.model.Producer;
 import com.asdasd.mjeesh.service.producer.ProducerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -26,5 +26,33 @@ public class ProducerController {
     @GetMapping("/{pageNo}")
     public List<ProducerDto> findAll(@PathVariable Integer pageNo) {
         return producerMapper.map(producerService.findAll(pageNo));
+    }
+
+    @GetMapping("/id/{id}")
+    public ProducerDto findById(@PathVariable Long id) {
+        var findResult = producerService.findById(id);
+        if (Objects.isNull(findResult)) {
+            throw new NoSuchProducerException("No such producer with id = " + id);
+        }
+
+        return producerMapper.map(findResult);
+    }
+
+    @PostMapping("/")
+    public ProducerDto addNewProducer(@RequestBody Producer producer) {
+        return producerMapper.map(producerService.save(producer));
+    }
+
+    @PutMapping("/")
+    public ProducerDto updateProducer(@RequestBody Producer producer) {
+        return producerMapper.map(producerService.save(producer));
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteProducer(@PathVariable Long id) {
+        if (!producerService.delete(id)) {
+            throw new NoSuchProductException("Database is not exist producer with id = " + id);
+        }
+        return "producer with id = " + id + " was deleted";
     }
 }

@@ -19,4 +19,5 @@ public class Producer extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id")
     private List<Contact> contacts = new ArrayList<>();
+
 }

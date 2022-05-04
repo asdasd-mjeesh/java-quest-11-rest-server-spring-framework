@@ -32,6 +32,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<Product> findAll(Integer pageNo) {
         Pageable paging = PageRequest.of(pageNo, DEFAULT_PAGE_SIZE, Sort.by(DEFAULT_SORT_VALUE));
         var executePage = productRepository.findAll(paging);
