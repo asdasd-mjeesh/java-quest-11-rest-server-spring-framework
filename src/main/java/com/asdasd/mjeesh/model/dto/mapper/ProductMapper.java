@@ -1,6 +1,6 @@
-package com.asdasd.mjeesh.dto.mapper;
+package com.asdasd.mjeesh.model.dto.mapper;
 
-import com.asdasd.mjeesh.dto.ProductDto;
+import com.asdasd.mjeesh.model.dto.ProductDto;
 import com.asdasd.mjeesh.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

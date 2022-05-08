@@ -1,8 +1,8 @@
 package com.asdasd.mjeesh.service.product;
 
 import com.asdasd.mjeesh.model.Product;
+import com.asdasd.mjeesh.model.dto.ProductFilter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
@@ -17,7 +17,7 @@ public interface ProductService {
 
     List<Product> findAllByProducerName(String producerName, Integer pageNo);
 
-    List<Product> findByFilter(String title, String producerName, BigDecimal minCost, BigDecimal maxCost, Integer pageNo);
+    List<Product> findByFilter(ProductFilter filter, Integer pageNo);
 
     boolean delete(Long id);
 }

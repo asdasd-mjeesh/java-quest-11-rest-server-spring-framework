@@ -1,4 +1,4 @@
-package com.asdasd.mjeesh.dto.mapper;
+package com.asdasd.mjeesh.model.dto.mapper;
 
 import java.util.List;
 

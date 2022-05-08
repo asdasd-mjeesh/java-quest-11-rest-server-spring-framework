@@ -1,6 +1,6 @@
-package com.asdasd.mjeesh.dto.mapper;
+package com.asdasd.mjeesh.model.dto.mapper;
 
-import com.asdasd.mjeesh.dto.ProducerDto;
+import com.asdasd.mjeesh.model.dto.ProducerDto;
 import com.asdasd.mjeesh.model.Producer;
 import org.springframework.stereotype.Component;
 

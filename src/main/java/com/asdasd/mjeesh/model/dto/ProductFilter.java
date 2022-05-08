@@ -1,4 +1,4 @@
-package com.asdasd.mjeesh.dto;
+package com.asdasd.mjeesh.model.dto;
 
 import java.math.BigDecimal;
 

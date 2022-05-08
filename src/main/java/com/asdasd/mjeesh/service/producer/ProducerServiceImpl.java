@@ -28,6 +28,10 @@ public class ProducerServiceImpl implements ProducerService {
         return producerRepository.save(producer);
     }
 
+    public List<Producer> findAll() {
+        return producerRepository.findAll();
+    }
+
     @Override
     public List<Producer> findAll(Integer pageNo) {
         Pageable paging = PageRequest.of(pageNo, DEFAULT_PAGE_SIZE, Sort.by(DEFAULT_SORT_VALUE));

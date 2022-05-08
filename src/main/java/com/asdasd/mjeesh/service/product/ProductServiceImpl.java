@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.service.product;
 
-import com.asdasd.mjeesh.dto.ProductFilter;
+import com.asdasd.mjeesh.model.dto.ProductFilter;
 import com.asdasd.mjeesh.model.Product;
 import com.asdasd.mjeesh.repository.ProductRepository;
 import com.asdasd.mjeesh.util.QPredicates;
@@ -70,10 +70,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByFilter(
-            String title, String producerName, BigDecimal minCost, BigDecimal maxCost, Integer pageNo) {
-        var filter = new ProductFilter(title, producerName, minCost, maxCost); // ok.
-
+    public List<Product> findByFilter(ProductFilter filter, Integer pageNo) {
         var predicate = QPredicates.builder()
                 .add(filter.title(), product.title::containsIgnoreCase)
                 .add(filter.producerName(), product.producer.name::containsIgnoreCase)

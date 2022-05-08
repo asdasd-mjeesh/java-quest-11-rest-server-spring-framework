@@ -6,4 +6,5 @@ class Pointcuts {
 
     @Pointcut("execution(* com.asdasd.mjeesh.service.product.ProductServiceImpl.*(..))")
     public void allMethodsInProductServicePointcut() {  /* pointcut */  }
+
 }

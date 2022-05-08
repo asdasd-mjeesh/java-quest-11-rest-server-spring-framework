@@ -1,7 +1,8 @@
 package com.asdasd.mjeesh.rest;
 
-import com.asdasd.mjeesh.dto.ProductDto;
-import com.asdasd.mjeesh.dto.mapper.ProductMapper;
+import com.asdasd.mjeesh.model.dto.ProductDto;
+import com.asdasd.mjeesh.model.dto.ProductFilter;
+import com.asdasd.mjeesh.model.dto.mapper.ProductMapper;
 import com.asdasd.mjeesh.exception_heandling.product.NoSuchProductException;
 import com.asdasd.mjeesh.model.Product;
 import com.asdasd.mjeesh.service.product.ProductService;
@@ -56,16 +57,22 @@ public class ProductController {
         return productMapper.map(productService.findAllByProducerName(producerName, pageNo));
     }
 
-    @GetMapping("/filter/{title}/{producerName}/{minCost}/{maxCost}/{pageNo}")
-    public List<ProductDto> findAllProductsByFilter(@PathVariable String title,
-                                                    @PathVariable String producerName,
-                                                    @PathVariable BigDecimal minCost,
-                                                    @PathVariable BigDecimal maxCost,
-                                                    @PathVariable Integer pageNo) {
-
-        System.out.println("title = " + title);
-        return productMapper.map(productService.findByFilter(title, producerName, minCost, maxCost, pageNo));
+    @PostMapping("/filter/{pageNo}")
+    public List<ProductDto> findAllProductsByFilter(@RequestBody ProductFilter productFilter,
+                                                    @PathVariable("pageNo") Integer pageNo) {
+        return productMapper.map(productService.findByFilter(productFilter, pageNo));
     }
+
+//    @GetMapping("/filter/{title}/{producerName}/{minCost}/{maxCost}/{pageNo}")
+//    public List<ProductDto> findAllProductsByFilter(@PathVariable(value = "") String title,
+//                                                    @PathVariable(value = "") String producerName,
+//                                                    @PathVariable(value = "0") BigDecimal minCost,
+//                                                    @PathVariable(value = "999999") BigDecimal maxCost,
+//                                                    @PathVariable(value = "0") Integer pageNo) {
+//
+//        System.out.println("title = " + title);
+//        return productMapper.map(productService.findByFilter(title, producerName, minCost, maxCost, pageNo));
+//    }
 
     @PutMapping("/")
     public ProductDto updateProduct(@RequestBody Product product) {

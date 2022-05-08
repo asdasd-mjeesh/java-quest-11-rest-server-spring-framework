@@ -1,7 +1,7 @@
 package com.asdasd.mjeesh.rest;
 
-import com.asdasd.mjeesh.dto.ProducerDto;
-import com.asdasd.mjeesh.dto.mapper.ProducerMapper;
+import com.asdasd.mjeesh.model.dto.ProducerDto;
+import com.asdasd.mjeesh.model.dto.mapper.ProducerMapper;
 import com.asdasd.mjeesh.exception_heandling.producer.NoSuchProducerException;
 import com.asdasd.mjeesh.exception_heandling.product.NoSuchProductException;
 import com.asdasd.mjeesh.model.Producer;
@@ -21,6 +21,11 @@ public class ProducerController {
     public ProducerController(ProducerServiceImpl producerService, ProducerMapper producerMapper) {
         this.producerService = producerService;
         this.producerMapper = producerMapper;
+    }
+
+    @GetMapping("/")
+    public List<ProducerDto> findAll() {
+        return producerMapper.map(producerService.findAll());
     }
 
     @GetMapping("/{pageNo}")
